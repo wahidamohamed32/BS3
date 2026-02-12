@@ -12,6 +12,7 @@ export default function Login({ setIsLogin, setUser }) {
             email === savedUser.email &&
             password === savedUser.password
         ) {
+            localStorage.setItem("userSession", JSON.stringify(savedUser));
             setUser(savedUser);
         } else {
             alert("Invalid credentials");

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './views/login';
 import Register from './views/signup';
@@ -7,11 +7,31 @@ import AdminLogin from './views/AdminLogin';
 import AdminDashboard from './views/AdminDashboard';
 
 function App() {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Check for existing session
+        const session = localStorage.getItem('userSession');
+        if (session) {
+            setUser(JSON.parse(session));
+        }
+        setLoading(false);
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-blue-600">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+            </div>
+        );
+    }
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/login" element={<LoginWrapper />} />
+                <Route path="/" element={<Dashboard user={user} setUser={setUser} />} />
+                <Route path="/login" element={<LoginWrapper user={user} setUser={setUser} />} />
                 <Route path="/signup" element={<RegisterWrapper />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -20,17 +40,7 @@ function App() {
     );
 }
 
-// Wrapper components to handle the existing prop-based logic if needed, 
-// or we can refactor Login/Register to simpler forms. 
-// For now, adapting them to work with routes.
-
-const LoginWrapper = () => {
-    // In a real app, you'd use a context or global state for user auth
-    // For now, we'll just render the Login component. 
-    // The existing Login component takes setIsLogin and setUser.
-    // We might need to adjust it to redirect upon login.
-    const [user, setUser] = useState(null);
-
+const LoginWrapper = ({ user, setUser }) => {
     if (user) {
         return <Navigate to="/" replace />;
     }
@@ -65,3 +75,4 @@ const RegisterWrapper = () => {
 };
 
 export default App;
+
