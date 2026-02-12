@@ -27,4 +27,4 @@ function Login({ setIsLogin, setUser }) {
             <p onClick={() => setIsLogin(false)}>Create new account</p>
         </>
     );
-}
+} i
