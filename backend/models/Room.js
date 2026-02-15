@@ -4,7 +4,7 @@ import sequelize from '../config/database.js';
 const Room = sequelize.define('Room', {
     id: {
         type: DataTypes.INTEGER,
-        primary_key: true,
+        primaryKey: true,
         autoIncrement: true,
     },
     name: {

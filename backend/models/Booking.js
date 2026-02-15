@@ -4,7 +4,7 @@ import sequelize from '../config/database.js';
 const Booking = sequelize.define('Booking', {
     id: {
         type: DataTypes.INTEGER,
-        primary_key: true,
+        primaryKey: true,
         autoIncrement: true,
     },
     date: {
