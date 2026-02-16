@@ -3,7 +3,17 @@ import { Booking, Room, User } from '../models/index.js';
 export const createBooking = async (req, res) => {
     try {
         const { roomId, userId, date, time } = req.body;
-        const booking = await Booking.create({ roomId, userId, date, time });
+        // Sequelize associations create foreign keys named `UserId` and `RoomId`.
+        // Accept either camelCase (`userId`/`roomId`) or capitalized keys (`UserId`/`RoomId`) from the client
+        const userIdVal = userId || req.body.UserId;
+        const roomIdVal = roomId || req.body.RoomId;
+
+        const booking = await Booking.create({
+            UserId: userIdVal,
+            RoomId: roomIdVal,
+            date,
+            time
+        });
         res.status(201).json(booking);
     } catch (error) {
         res.status(500).json({ message: error.message });
