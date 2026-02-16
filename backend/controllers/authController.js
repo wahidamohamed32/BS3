@@ -18,7 +18,11 @@ export const signup = async (req, res) => {
         const { password: _, ...userWithoutPassword } = user.toJSON();
         res.status(201).json(userWithoutPassword);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Signup Error:', error);
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({ message: 'Email already in use' });
+        }
+        res.status(500).json({ message: error.message || 'Signup failed' });
     }
 };
 
@@ -44,6 +48,7 @@ export const login = async (req, res) => {
         const { password: _, ...userWithoutPassword } = user.toJSON();
         res.json(userWithoutPassword);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Login Error:', error);
+        res.status(500).json({ message: error.message || 'Login failed' });
     }
 };

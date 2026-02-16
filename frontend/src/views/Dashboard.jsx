@@ -37,7 +37,11 @@ const Dashboard = ({ user, setUser }) => {
     const handleBooking = async (bookingData) => {
         const enrichedBooking = {
             ...bookingData,
-            userName: user.fullName || user.name || 'Member'
+            userName: user.fullName || user.name || 'Member',
+            userId: user.id,
+            // Also include Sequelize-style foreign key names in case backend expects them
+            UserId: user.id,
+            RoomId: bookingData.roomId || bookingData.RoomId
         };
         await createBooking(enrichedBooking);
         alert('Booking submitted successfully! Waiting for admin approval.');

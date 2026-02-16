@@ -12,7 +12,8 @@ export default function Register({ setIsLogin }) {
             alert('Signup successful! Please login.');
             window.location.href = '/login';
         } catch (error) {
-            alert('Signup failed. Please try again.');
+            const message = error.message || 'Signup failed. Please try again.';
+            alert(`Signup failed: ${message}`);
         }
     };
 
