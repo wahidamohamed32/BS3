@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getRooms, createBooking } from '../utils/api';
 import BookingModal from '../components/BookingModal';
 import RoomModal from '../components/RoomModal';
+import coverImage from '../assets/cover.jpg';
 
 const Dashboard = ({ user, setUser }) => {
     const [rooms, setRooms] = useState([]);
@@ -49,13 +50,24 @@ const Dashboard = ({ user, setUser }) => {
 
     return (
         <div className="w-full">
-            <div className="mb-12">
-                <h1 className="text-4xl font-black text-gray-800 tracking-tight mb-2">
-                    Welcome to <span className="text-blue-600 italic">Swahilipot Hub</span>
-                </h1>
-                <p className="text-gray-500 text-lg">
-                    Empowering the Community through Innovation and Art.
-                </p>
+            {/* Fullscreen Cover Section */}
+            <div 
+                className="relative w-full h-screen overflow-hidden shadow-lg"
+                style={{
+                    backgroundImage: `url(${coverImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }}
+            >
+                <div className="absolute inset-0 bg-black/30"></div>
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center">
+                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-4 drop-shadow-lg">
+                        Swahilipot <span className="text-blue-300 italic">Hub</span>
+                    </h1>
+                    <p className="text-2xl md:text-3xl text-gray-100 drop-shadow">
+                        Empowering the Community through Innovation and Art.
+                    </p>
+                </div>
             </div>
 
             {/* Rooms Section */}
