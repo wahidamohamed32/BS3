@@ -45,6 +45,9 @@ const Dashboard = ({ user, setUser }) => {
             RoomId: bookingData.roomId || bookingData.RoomId
         };
         await createBooking(enrichedBooking);
+        // Refresh rooms after booking to update availability
+        const updatedRooms = await getRooms();
+        setRooms(updatedRooms);
         alert('Booking submitted successfully! Waiting for admin approval.');
     };
 
